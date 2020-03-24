@@ -8,9 +8,11 @@ clear
 
 #CONSTANTS
 START_POSITION=0
+WINNING_POSITION=100
 
 #VARIABLES
 newPosition=0
+prevPosition=0
 
 function rollDie() {
 	result=$(( RANDOM % 6 + 1 ))
@@ -23,15 +25,22 @@ function option() {
 }
 
 function playerOption() {
-	while [[ $newPosition -lt 100 ]]
+	while [[ $newPosition -lt $WINNING_POSITION ]]
 	do
 		operation=$( option )
 		case $operation in
 			1)
-				newPosition=0;;
+				prevPosition=$newPosition
+				newPosition=$newPosition;;
 			2)
-				newPosition=$(( $newPosition + $( rollDie ) ));;
+				prevPosition=$newPosition
+				newPosition=$(( $newPosition + $( rollDie ) ))
+				if [[ $newPosition -gt $WINNING_POSITION ]]
+				then
+					newPosition=$prevPosition
+				fi;;
 			3)
+				prevPosition=$newPosition
 				newPosition=$(( $newPosition - $( rollDie ) ))
 				if [[ $newPosition -lt  0 ]]
 				then
