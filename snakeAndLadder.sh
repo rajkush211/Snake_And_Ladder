@@ -23,15 +23,22 @@ function option() {
 }
 
 function playerOption() {
-	operation=$( option )
-	case $operation in
-		1)
-			newPosition=0;;
-		2)
-			newPosition=$(( $newPosition + $( rollDie ) ));;
-		3)
-			newPosition=$(( $newPosition - $( rollDie ) ));;
-	esac
+	while [[ $newPosition -lt 100 ]]
+	do
+		operation=$( option )
+		case $operation in
+			1)
+				newPosition=0;;
+			2)
+				newPosition=$(( $newPosition + $( rollDie ) ));;
+			3)
+				newPosition=$(( $newPosition - $( rollDie ) ))
+				if [[ $newPosition -lt  0 ]]
+				then
+					newPosition=0
+				fi;;
+		esac
+	done
 	echo $newPosition
 }
 
