@@ -9,4 +9,11 @@ clear
 #CONSTANTS
 START_POSITION=0
 
+function rollDie() {
+	result=$(( RANDOM % 6 + 1 ))
+	echo $result
+}
+
+rollDie
+
 sleep 1
