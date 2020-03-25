@@ -9,6 +9,10 @@ clear
 #CONSTANTS
 START_POSITION=0
 WINNING_POSITION=100
+NO_PLAY=1
+LADDER=2
+SNAKE=3
+
 
 #VARIABLES
 newPosition1=0
@@ -43,7 +47,7 @@ function playerOption() {
 			(( diceRolledCount++ ))
 		fi
 		case $operation in
-			1)
+			$NO_PLAY)
 				echo "NO PLAY"
 				if [ $playerTurn == $player1 ]
 				then
@@ -55,7 +59,7 @@ function playerOption() {
 					newPosition2=$newPosition2
 					echo "Position of $player2 is still $newPosition2"
 				fi;;
-			2)
+			$LADDER)
 				echo "LADDER"
 				if [ $playerTurn == $player1 ]
 				then
@@ -75,7 +79,7 @@ function playerOption() {
 					fi
 					echo "Position of $player2 after Dice rolled $newPosition2"
 				fi;;
-			3)
+			$SNAKE)
 				echo "SNAKE"
 				if [ $playerTurn == $player1 ]
 				then
