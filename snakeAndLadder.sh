@@ -30,11 +30,13 @@ function option() {
 }
 
 function playerOption() {
-	playerTurn=1
+	player1=$1
+	player2=$2
+	playerTurn=$player1
 	operation=0
 	while [[ $newPosition1 -lt $WINNING_POSITION && $newPosition2 -lt $WINNING_POSITION ]]
 	do
-		echo -e "\nPlaying $playerTurn player"
+		echo -e "\nPlaying $playerTurn:"
 		operation=$( option )
 		if [ $operation -ne 1 ]
 		then
@@ -43,19 +45,19 @@ function playerOption() {
 		case $operation in
 			1)
 				echo "NO PLAY"
-				if [ $playerTurn -eq 1 ]
+				if [ $playerTurn == $player1 ]
 				then
 					prevPosition1=$newPosition1
 					newPosition1=$newPosition1
-					echo "Position of player 1 is still $newPosition1"
+					echo "Position of $player1 is still $newPosition1"
 				else
 					prevPosition2=$newPosition2
 					newPosition2=$newPosition2
-					echo "Position of player 2 is still $newPosition2"
+					echo "Position of $player2 is still $newPosition2"
 				fi;;
 			2)
 				echo "LADDER"
-				if [ $playerTurn -eq 1 ]
+				if [ $playerTurn == $player1 ]
 				then
 					prevPosition1=$newPosition1
 					newPosition1=$(( $newPosition1 + $( rollDie ) ))
@@ -63,7 +65,7 @@ function playerOption() {
 					then
 						newPosition1=$prevPosition1
 					fi
-					echo "Position of player 1 after Dice rolled $newPosition1"
+					echo "Position of $player1 after Dice rolled $newPosition1"
 				else
 					prevPosition2=$newPosition2
 					newPosition2=$(( $newPosition2 + $( rollDie ) ))
@@ -71,11 +73,11 @@ function playerOption() {
 					then
 						newPosition2=$prevPosition2
 					fi
-					echo "Position of player 2 after Dice rolled $newPosition2"
+					echo "Position of $player2 after Dice rolled $newPosition2"
 				fi;;
 			3)
 				echo "SNAKE"
-				if [ $playerTurn -eq 1 ]
+				if [ $playerTurn == $player1 ]
 				then
 					prevPosition1=$newPosition1
 					newPosition1=$(( $newPosition1 - $( rollDie ) ))
@@ -83,7 +85,7 @@ function playerOption() {
 					then
 						newPosition1=0
 					fi
-					echo "Position of player1 after Dice rolled $newPosition1"
+					echo "Position of $player1 after Dice rolled $newPosition1"
 				else
 					prevPosition2=$newPosition2
 					newPosition2=$(( $newPosition2 - $( rollDie ) ))
@@ -91,10 +93,15 @@ function playerOption() {
 					then
 						newPosition2=0
 					fi
-						echo "Position of player2 after Dice rolled $newPosition2"
+						echo "Position of $player2 after Dice rolled $newPosition2"
 				fi;;
 		esac
-		playerTurn=$(( 3 - playerTurn ))
+		if [ $playerTurn == $player1 ]
+		then
+			playerTurn=$player2
+		else
+			playerTurn=$player1
+		fi
 	done
 	echo -e "\nThe Dice rolled $diceRolledCount times"
 }
@@ -102,7 +109,7 @@ function playerOption() {
 function snakeAndLadderGame() {
 	read -p "Enter Player 1 name: " player1
 	read -p "Enter Player 2 name: " player2
-	playerOption
+	playerOption $player1 $player2
 	if [[ $newPosition1 -eq 100 ]]
 	then
 		echo -e "\nCongratulations $player1 you won"
