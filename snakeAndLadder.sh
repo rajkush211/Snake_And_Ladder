@@ -40,8 +40,8 @@ function playerOption() {
 				if [[ $newPosition -gt $WINNING_POSITION ]]
 				then
 					newPosition=$prevPosition
-				fi
-				echo "Position after Dice rolled $newPosition";;
+				fi;;
+#				echo "Position after Dice rolled $newPosition";;
 			3)
 				prevPosition=$newPosition
 				newPosition=$(( $newPosition - $( rollDie ) ))
@@ -49,13 +49,28 @@ function playerOption() {
 				if [[ $newPosition -lt  0 ]]
 				then
 					newPosition=0
-				fi
-				echo "Position after Dice rolled $newPosition";;
+				fi;;
+#				echo "Position after Dice rolled $newPosition";;
 		esac
 	done
-	echo "Dice rolled $diceRolledCount"
+	echo "$diceRolledCount"
 }
 
-playerOption
+function snakeAndLadderGame() {
+	read -p "Enter Player1 name: " player1
+	read -p "Enter Player2 name: " player2
+	player1Game=$( playerOption )
+	player2Game=$( playerOption )
+	echo -e "\n$player1 rolled the Dice for $player1Game times"
+	echo "$player2 rolled the Dice for $player2Game times"
+	if [[ $player1Game -lt $player2Game ]]
+	then
+		echo -e "\nCongratulations $player1 you won"
+	else
+		echo -e "\nCongratulations $player2 you won"
+	fi
+}
+
+snakeAndLadderGame
 
 sleep 1
